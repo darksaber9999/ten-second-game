@@ -27,7 +27,7 @@
                 </h4>
               </div>
               <div class="col-xs-4" id="answer-input-wrapper">
-                <input class="" id="answer-input" placeholder="Answer">
+                <input class="" id="answer-input" placeholder="Answer" autofocus>
               </div>
               <div class="col-xs-6 text-center" id="timer">
                 <h4 id="timer-title">Seconds left:</h4>
@@ -35,17 +35,21 @@
               </div>
               <div class="col-xs-6" id="game-controls">
                 <div class="row">
+                  <div class="col-xs-12" id="new-game-wrapper">
+                    <label for="new-game">Start new game: </label>
+                    <button name="new-game" id="new-game">Start</button>
+                  </div>
                   <div class="col-xs-12" id="game-mode-wrapper">
                     <label for="game-mode">Choose game mode: </label>
                     <select name="game-mode" id="game-mode">
-                      <option value="addition">+ (Addition)</option>
-                      <option value="subtraction">- (Subtraction)</option>
-                      <option value="multiplication">x (Multiplication)</option>
-                      <option value="division">/ (Division)</option>
+                      <option value="+">+ (Addition)</option>
+                      <option value="-">- (Subtraction)</option>
+                      <option value="*">x (Multiplication)</option>
+                      <option value="/">/ (Division)</option>
                     </select>
                   </div>
                   <div class="col-xs-12" id="number-limit-wrapper">
-                    <label for="number-limit">Equation number limit: </label>
+                    <label for="number-limit">Answer number limit: </label>
                     <select name="number-limit" id="number-limit">
                       <option value="10">10</option>
                       <option value="15">15</option>

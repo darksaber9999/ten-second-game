@@ -2,11 +2,21 @@ $(document).ready(function () {
   var equation = $('#equation');
   var answerInput = $('#answer-input');
   var timerValue = $('#timer-value');
+  var newGame = $('#new-game');
   var gameMode = $('#game-mode');
   var numberLimit = $('#number-limit');
   var currentScore = $('#current-score');
   var highScore = $('#high-score');
   var timer = null;
+  var gameModeOperator = '+';
+  var numberLimitValue = 10;
+
+  // Function to generate a random number
+  var randomNumber = function (max) {
+    max = ++max;
+    var randomNum = Math.floor(Math.random() * max);
+    return randomNum;
+  };
 
   // Function to generate a new equation string and answer
   var generateEquation = function (operator) {
@@ -14,12 +24,39 @@ $(document).ready(function () {
     var firstNumber = 0;
     var secondNumber = 0;
     var answer = 0;
+    var tempNumber = 0;
 
-    firstNumber = Math.floor(Math.random() * (11 - 0)) + 0;
-    secondNumber = Math.floor(Math.random() * (11 - 0)) + 0;
+    switch (operator) {
+      case '+':
+        firstNumber = randomNumber(numberLimitValue);
+        secondNumber = randomNumber(numberLimitValue);
+        answer = firstNumber + secondNumber;
+        break;
+      case '-':
+        firstNumber = randomNumber(numberLimitValue);
+        secondNumber = randomNumber(numberLimitValue);
+        if (secondNumber > firstNumber) {
+          tempNumber = secondNumber;
+          secondNumber = firstNumber;
+          firstNumber = tempNumber;
+          answer = firstNumber - secondNumber;
+        } else {
+          answer = firstNumber - secondNumber;
+        }
+        break;
+      case '*':
+        firstNumber = randomNumber(numberLimitValue);
+        secondNumber = randomNumber(numberLimitValue);
+        answer = firstNumber * secondNumber;
+        break;
+      case '/':
+        answer = randomNumber(numberLimitValue);
+        secondNumber = randomNumber(numberLimitValue);
+        firstNumber = secondNumber * answer;
+        break;
+    }
 
     question = firstNumber + ' ' + operator + ' ' + secondNumber;
-    answer = firstNumber + secondNumber;
     equation.text(question);
 
     return answer;
@@ -45,6 +82,7 @@ $(document).ready(function () {
     timer = null;
     timerValue.text(10);
     updateHighScore();
+    answerInput.attr('disabled', 'true');
   };
 
   // Function to add a second to the current time for a correct guess
@@ -74,11 +112,26 @@ $(document).ready(function () {
     if (answerInput.val() == equationAnswer) {
       addSecond();
       addToScore();
-      equationAnswer = generateEquation('+');
+      equationAnswer = generateEquation(gameModeOperator);
       answerInput.val('');
     }
   });
 
+  // Function listening for a change in game mode
+  gameMode.change(function () {
+    gameModeOperator = gameMode.val();
+  });
+
+  // Function listening for a change in number limit
+  numberLimit.change(function () {
+    numberLimitValue = numberLimit.val();
+  });
+
+  // Function to start a new game and enable the input field
+  newGame.click(function () {
+    answerInput.removeAttr('disabled');
+  });
+
   // Program initiation
-  var equationAnswer = generateEquation('+');
+  var equationAnswer = generateEquation(gameModeOperator);
 });
