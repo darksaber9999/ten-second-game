@@ -9,13 +9,32 @@ $(document).ready(function () {
   var highScore = $('#high-score');
   var timer = null;
   var gameModeOperator = '+';
+  var gameModeIsRandom = false;
   var numberLimitValue = 10;
 
   // Function to generate a random number
-  var randomNumber = function (max) {
+  var randomNumber = function (max, min) {
     max = ++max;
-    var randomNum = Math.floor(Math.random() * max);
+    var randomNum = Math.floor((Math.random() * max) + min);
     return randomNum;
+  };
+
+  // Function to randomize the operator
+  var randomOperator = function (index) {
+    switch (index) {
+      case 1:
+        gameModeOperator = '+';
+        break;
+      case 2:
+        gameModeOperator = '-';
+        break;
+      case 3:
+        gameModeOperator = '*';
+        break;
+      case 4:
+        gameModeOperator = '/';
+        break;
+    }
   };
 
   // Function to generate a new equation string and answer
@@ -28,13 +47,13 @@ $(document).ready(function () {
 
     switch (operator) {
       case '+':
-        firstNumber = randomNumber(numberLimitValue);
-        secondNumber = randomNumber(numberLimitValue);
+        firstNumber = randomNumber(numberLimitValue, 0);
+        secondNumber = randomNumber(numberLimitValue, 0);
         answer = firstNumber + secondNumber;
         break;
       case '-':
-        firstNumber = randomNumber(numberLimitValue);
-        secondNumber = randomNumber(numberLimitValue);
+        firstNumber = randomNumber(numberLimitValue, 0);
+        secondNumber = randomNumber(numberLimitValue, 0);
         if (secondNumber > firstNumber) {
           tempNumber = secondNumber;
           secondNumber = firstNumber;
@@ -45,13 +64,13 @@ $(document).ready(function () {
         }
         break;
       case '*':
-        firstNumber = randomNumber(numberLimitValue);
-        secondNumber = randomNumber(numberLimitValue);
+        firstNumber = randomNumber(numberLimitValue, 0);
+        secondNumber = randomNumber(numberLimitValue, 0);
         answer = firstNumber * secondNumber;
         break;
       case '/':
-        answer = randomNumber(numberLimitValue);
-        secondNumber = randomNumber(numberLimitValue);
+        answer = randomNumber(numberLimitValue, 0);
+        secondNumber = randomNumber(numberLimitValue, 0);
         firstNumber = secondNumber * answer;
         break;
     }
@@ -80,9 +99,11 @@ $(document).ready(function () {
   var stopTimer = function () {
     window.clearInterval(timer);
     timer = null;
+    answerInput.blur();
     timerValue.text(10);
     updateHighScore();
     answerInput.attr('disabled', 'true');
+    newGame.removeAttr('disabled');
   };
 
   // Function to add a second to the current time for a correct guess
@@ -112,6 +133,9 @@ $(document).ready(function () {
     if (answerInput.val() == equationAnswer) {
       addSecond();
       addToScore();
+      if (gameModeIsRandom) {
+        randomOperator(randomNumber(4, 1));
+      }
       equationAnswer = generateEquation(gameModeOperator);
       answerInput.val('');
     }
@@ -119,7 +143,13 @@ $(document).ready(function () {
 
   // Function listening for a change in game mode
   gameMode.change(function () {
-    gameModeOperator = gameMode.val();
+    if (gameMode.val() === 'random') {
+      gameModeIsRandom = true;
+      randomOperator(randomNumber(4, 1));
+    } else {
+      gameModeIsRandom = false;
+      gameModeOperator = gameMode.val();
+    }
   });
 
   // Function listening for a change in number limit
@@ -130,8 +160,9 @@ $(document).ready(function () {
   // Function to start a new game and enable the input field
   newGame.click(function () {
     answerInput.removeAttr('disabled');
+    newGame.attr('disabled', 'true');
   });
 
   // Program initiation
-  var equationAnswer = generateEquation(gameModeOperator);
+  var equationAnswer = generateEquation(gameModeOperator, 0);
 });

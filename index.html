@@ -21,10 +21,14 @@
         <div class="row">
           <div class="col-xs-12">
             <div class="row">
-              <div class="col-xs-8 text-center" id="equation-wrapper">
+              <br>
+              <div class="col-xs-4 text-right" id="equation-wrapper">
                 <h4 id="equation">
                   <!-- Equation will display here -->
                 </h4>
+              </div>
+              <div class="col-xs-4 text-center" id="equals-sign">
+                <h4>=</h4>
               </div>
               <div class="col-xs-4" id="answer-input-wrapper">
                 <input class="" id="answer-input" placeholder="Answer" autofocus>
@@ -36,8 +40,8 @@
               <div class="col-xs-6" id="game-controls">
                 <div class="row">
                   <div class="col-xs-12" id="new-game-wrapper">
-                    <label for="new-game">Start new game: </label>
-                    <button name="new-game" id="new-game">Start</button>
+                    <label for="new-game">Unlock answer field: </label>
+                    <button name="new-game" class="btn-primary" id="new-game" disabled="true">New Game</button>
                   </div>
                   <div class="col-xs-12" id="game-mode-wrapper">
                     <label for="game-mode">Choose game mode: </label>
@@ -46,6 +50,7 @@
                       <option value="-">- (Subtraction)</option>
                       <option value="*">x (Multiplication)</option>
                       <option value="/">/ (Division)</option>
+                      <option value="random">Random</option>
                     </select>
                   </div>
                   <div class="col-xs-12" id="number-limit-wrapper">

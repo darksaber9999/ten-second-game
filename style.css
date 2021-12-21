@@ -1,0 +1,16 @@
+body {
+  background-color: black;
+}
+
+.container {
+  background-color: white;
+}
+
+#answer-input {
+  margin-top: 10px;
+}
+
+#equation-wrapper, #equals-sign, #answer-input-wrapper {
+  border-top: 2px black;
+  border-bottom: 2px black;
+}
