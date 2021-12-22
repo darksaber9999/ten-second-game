@@ -2,15 +2,15 @@ body {
   background-color: black;
 }
 
-.container {
+#game-wrapper {
   background-color: white;
+  border-radius: 20%;
 }
 
 #answer-input {
   margin-top: 10px;
 }
 
-#equation-wrapper, #equals-sign, #answer-input-wrapper {
-  border-top: 2px black;
-  border-bottom: 2px black;
+#title {
+  color: white;
 }
