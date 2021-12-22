@@ -70,7 +70,7 @@ $(document).ready(function () {
         break;
       case '/':
         answer = randomNumber(numberLimitValue, 0);
-        secondNumber = randomNumber(numberLimitValue, 0);
+        secondNumber = randomNumber(numberLimitValue, 1);
         firstNumber = secondNumber * answer;
         break;
     }
